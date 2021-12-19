@@ -1,0 +1,90 @@
+<VeeamMonitor Version="1100">
+    <Categories>
+        <Host id="3" AlarmType="0">
+            <Alarm>
+                <Config Enable="1" AlarmType="0" Name="Hardening - SSH access has been enabled" IsDefault="0" DetectOnReplicas="1" InternalId="0" Uid="{CE052E35-0C8C-4AAE-B550-D927381403D0}">
+                    <TriggersConfiguration>
+                        <Triggers>
+                            <Event enabled="1" uuid="{DD8C628A-7646-43F4-A2C3-58B1E03EF96F}" type="esx.audit.ssh.enabled" substring="" severity="1" suppress="1" trigger_after="0" delay-time="5" delay-time-type="1" />
+                        </Triggers>
+                        <Links>
+                            <Trigger operation="NONE" index="0" />
+                        </Links>
+                    </TriggersConfiguration>
+                    <Actions>
+                        <SendGroupMail Value="" Condition="Always" />
+                    </Actions>
+                    <RemediesConfiguration>
+                        <Remedies />
+                    </RemediesConfiguration>
+                    <Suppress />
+                    <KnowledgeBase summary="ESXi is not a UNIX-like multiuser OS -- it is a purpose-built hypervisor intended to be managed via the Host Client, vSphere Client, and/or APIs. On ESXi, SSH is a troubleshooting and support interface, and is intentionally stopped and disabled by default. Enablement of the interface brings risk." cause="SSH access has been enabled. As a best practice, services like SSH are better to be disabled for hardening Purposes." resolution='Disable SSH Service by going to: Host -&gt; &quot;Configure&quot; tab -&gt; &quot;System&quot; group -&gt; &quot;Services&quot;' external="" custom="" />
+                </Config>
+                <Assigment NodeID="0" Propagate="1" Root="1" TreeMode="0" />
+            </Alarm>
+            <Alarm>
+                <Config Enable="1" AlarmType="0" Name="Hardening - DCUI has been enabled" IsDefault="0" DetectOnReplicas="1" InternalId="0" Uid="{3EEB7FF2-F2FA-45DF-BDBF-4543A3BF7647}">
+                    <TriggersConfiguration>
+                        <Triggers>
+                            <Event enabled="1" uuid="{7ADFC87F-75C0-41B1-B50C-D8632466FC87}" type="esx.audit.dcui.enabled" substring="" severity="0" suppress="1" trigger_after="0" delay-time="5" delay-time-type="1" />
+                        </Triggers>
+                        <Links>
+                            <Trigger operation="NONE" index="0" />
+                        </Links>
+                    </TriggersConfiguration>
+                    <Actions>
+                        <SendGroupMail Value="" Condition="Always" />
+                    </Actions>
+                    <RemediesConfiguration>
+                        <Remedies />
+                    </RemediesConfiguration>
+                    <Suppress />
+                    <KnowledgeBase summary='&quot;Lockdown mode disables direct host access requiring that admins manage hosts from vCenter Server.  However, if a host becomes isolated from vCenter Server, the admin is locked out and can no longer manage the host. If you are using normal lockdown mode, you can avoid becoming locked out of an ESXi host that is running in lockdown mode, by setting DCUI.Access to a list of highly trusted users who can override lockdown mode and access the DCUI.&#x0D;&#x0A;&#x0D;&#x0A;The DCUI is completely unavailable in strict lockdown mode, so this parameter has no effect.&quot;' cause="Direct Host Access has been enabled from vCenter." resolution='Change the Lockdown Host Mode to Normal or Strict going to: Host -&gt; &quot;Configure&quot; tab -&gt; &quot;System&quot; group -&gt; &quot;Advanced System Settings&quot;' external="" custom='&quot;Enabling lockdown mode disables direct access to an ESXi host and requires that the host managed remotely from vCenter Server.  This is done to ensure the roles and access controls implemented in vCenter are always enforced and users cannot bypass them by logging into a host directly.   By forcing all interaction to occur through vCenter Server, the risk of someone inadvertently attaining elevated privileges or performing tasks that are not properly audited is greatly reduced.  Note:  Lockdown mode does not apply to  users who log in using authorized keys. When you use an authorized key file for root user authentication, root users are not prevented from accessing a host with SSH even when the host is in lockdown mode. &#x0D;&#x0A;&#x0D;&#x0A;Note that users listed in the DCUI.Access list for each host are allowed to override lockdown mode and login to the DCUI.  &#x0D;&#x0A;&#x0D;&#x0A;By default the &quot;&quot;root&quot;&quot; user is the only user listed in the DCUI.Access list.&#x0D;&#x0A;&#x0D;&#x0A;There are three settings for lockdown mode: disabled, normal, and strict. The choice of strict means that if the ESXi host loses contact with vCenter Server it cannot be managed in any way until that connection is restored. If that connection cannot be restored the host will need to be rebuilt. This is beyond the needs of most deployments. As such, we recommend normal lockdown mode.&quot;' />
+                </Config>
+                <Assigment NodeID="0" Propagate="1" Root="1" TreeMode="0" />
+            </Alarm>
+            <Alarm>
+                <Config Enable="1" AlarmType="0" Name="Hardening - Lockdown Enabled" IsDefault="0" DetectOnReplicas="1" InternalId="0" Uid="{C2F5B04A-B67E-4F94-8E0B-7376166F38CB}">
+                    <TriggersConfiguration>
+                        <Triggers>
+                            <Event enabled="1" uuid="{9E184A33-F673-407B-8A2D-0C384291CAD8}" type="esx.audit.lockdownmode.disabled" substring="" severity="0" suppress="1" trigger_after="0" delay-time="5" delay-time-type="1" />
+                        </Triggers>
+                        <Links>
+                            <Trigger operation="NONE" index="0" />
+                        </Links>
+                    </TriggersConfiguration>
+                    <Actions>
+                        <SendGroupMail Value="" Condition="Always" />
+                    </Actions>
+                    <RemediesConfiguration>
+                        <Remedies />
+                    </RemediesConfiguration>
+                    <Suppress />
+                    <KnowledgeBase summary='&quot;Enabling lockdown mode disables direct access to an ESXi host and requires that the host managed remotely from vCenter Server.  This is done to ensure the roles and access controls implemented in vCenter are always enforced and users cannot bypass them by logging into a host directly.   By forcing all interaction to occur through vCenter Server, the risk of someone inadvertently attaining elevated privileges or performing tasks that are not properly audited is greatly reduced.  Note:  Lockdown mode does not apply to  users who log in using authorized keys. When you use an authorized key file for root user authentication, root users are not prevented from accessing a host with SSH even when the host is in lockdown mode.&#x0D;&#x0A;&#x0D;&#x0A;Note that users listed in the DCUI.Access list for each host are allowed to override lockdown mode and login to the DCUI.&#x0D;&#x0A;&#x0D;&#x0A;By default the &quot;&quot;root&quot;&quot; user is the only user listed in the DCUI.Access list.&#x0D;&#x0A;&#x0D;&#x0A;There are three settings for lockdown mode: disabled, normal, and strict. The choice of strict means that if the ESXi host loses contact with vCenter Server it cannot be managed in any way until that connection is restored. If that connection cannot be restored the host will need to be rebuilt. This is beyond the needs of most deployments. As such, we recommend normal lockdown mode.&quot;' cause="The Lockdown mode has been disabled" resolution='Make sure you have the correct level of lockdown by going to: Host -&gt; &quot;Configure&quot; tab -&gt; &quot;System&quot; group -&gt; &quot;Security Profile&quot;' external="" custom="" />
+                </Config>
+                <Assigment NodeID="0" Propagate="1" Root="1" TreeMode="0" />
+            </Alarm>
+            <Alarm>
+                <Config Enable="1" AlarmType="0" Name="Hardening - Host acceptance level changed" IsDefault="0" DetectOnReplicas="1" InternalId="0" Uid="{418F297D-0F07-4217-851A-A10F4A99DC19}">
+                    <TriggersConfiguration>
+                        <Triggers>
+                            <Event enabled="1" uuid="{32A31C7A-E567-4B2D-8D2B-DDFFFBF1F009}" type="esx.audit.esximage.hostacceptance.changed" substring="" severity="0" suppress="1" trigger_after="0" delay-time="5" delay-time-type="1" />
+                        </Triggers>
+                        <Links>
+                            <Trigger operation="NONE" index="0" />
+                        </Links>
+                    </TriggersConfiguration>
+                    <Actions>
+                        <SendGroupMail Value="" Condition="Always" />
+                    </Actions>
+                    <RemediesConfiguration>
+                        <Remedies />
+                    </RemediesConfiguration>
+                    <Suppress />
+                    <KnowledgeBase summary='&quot;The acceptance level controls what ESXi permits to be installed. There are four levels: VMwareCertified, VMwareAccepted, PartnerSupported, and CommunitySupported.&#x0D;&#x0A;&#x0D;&#x0A;CommunitySupported VIBs have not been tested by VMware or a VMware partner and do not contain a digital signature. These are dangerous.&quot;' cause="The acceptance level has been changed." resolution='Please verify that your Hosts are either on VMwareCertified, VMwareAccepted, or PartnerSupported by going to: Host -&gt; &quot;Configure&quot; tab -&gt; &quot;System&quot; group -&gt; &quot;Security Profile&quot;' external="" custom="" />
+                </Config>
+                <Assigment NodeID="0" Propagate="1" Root="1" TreeMode="0" />
+            </Alarm>
+        </Host>
+    </Categories>
+</VeeamMonitor>
